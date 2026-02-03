@@ -13,9 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.10)
-
-#set(CMAKE_C_COMPILER clang)
+cmake_minimum_required(VERSION 3.13)
 
 project(uthread LANGUAGES C ASM)
 
