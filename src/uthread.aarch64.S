@@ -13,17 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef __APPLE__
+.section __TEXT,__text
+#else
 .section .text
+#endif
 
 .macro function name
   .macro end_function
+#ifndef __APPLE__
     .size \name, . -\name
+#endif
     .purgem end_function
   .endm
+#ifdef __APPLE__
+  .globl _\name
+  .p2align 4
+  _\name:
+#else
   .global \name
   .type \name, %function
   .align 16
   \name:
+#endif
 .endm
 
 // x0: Argument 0

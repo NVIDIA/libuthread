@@ -19,7 +19,7 @@ project(uthread LANGUAGES C ASM)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wconversion")
 
-if("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+if("${CMAKE_C_COMPILER_ID}" MATCHES "Clang")
   set(NVUT_TARGET "-print-target-triple")
 else()
   # Assume GNU.
@@ -31,6 +31,10 @@ execute_process(
   COMMAND_ERROR_IS_FATAL ANY
 )
 string(REGEX MATCH "^[^-]+" NVUT_TARGET "${NVUT_TARGET}")
+# Apple reports "arm64"; normalize to "aarch64" for source file naming.
+if("${NVUT_TARGET}" STREQUAL "arm64")
+  set(NVUT_TARGET "aarch64")
+endif()
 message(STATUS "NVUT_TARGET = ${NVUT_TARGET}")
 
 option(NVUT_BUILD_TESTS "Build tests" ON)
