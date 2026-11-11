@@ -15,4 +15,5 @@
 
 add_executable(basic_tests basic_tests.c)
 target_include_directories(basic_tests PRIVATE ${CMAKE_SOURCE_DIR}/third_party/unity/src)
-target_link_libraries(basic_tests uthread unity)
+find_package(Threads REQUIRED)
+target_link_libraries(basic_tests uthread unity Threads::Threads)
