@@ -31,7 +31,10 @@
 // x2: Stack begin
 // x3: Main stack
 function launch_first_uthread
-  sub     x4, sp, #160
+  // Reserve the save area before writing it: AArch64 has no red zone, so a signal
+  // arriving before the stack switch would otherwise overwrite it.
+  sub     sp, sp, #160
+  mov     x4, sp
   str     x4, [x3]
 
   stp     x19, x20, [x4,   #0]
